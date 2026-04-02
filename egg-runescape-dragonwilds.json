@@ -1,0 +1,103 @@
+{
+  "_comment": "DO NOT EDIT: FILE GENERATED AUTOMATICALLY - Created by c4rl0s | GamzyHost",
+  "meta": {
+    "version": "PTDL_v2",
+    "update_url": null
+  },
+  "exported_at": "2026-04-02T22:50:00+02:00",
+  "name": "RuneScape: Dragonwilds",
+  "author": "c4rl0s@gamzyhost",
+  "uuid": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+  "description": "RuneScape: Dragonwilds Dedicated Server. A survival and exploration game developed by Jagex. Requires Steam AppID 4019830. | Egg created by c4rl0s @ GamzyHost",
+  "features": [],
+  "docker_images": {
+    "ghcr.io/parkervcp/steamcmd:debian": "ghcr.io/parkervcp/steamcmd:debian"
+  },
+  "file_denylist": [],
+  "startup": "./RSDragonwildsServer.sh -log -NewConsole -port={{SERVER_PORT}} -QueryPort={{QUERY_PORT}}",
+  "config": {
+    "files": "{}",
+    "startup": "{\r\n    \"done\": \"Server is up and running\"\r\n}",
+    "logs": "{}",
+    "stop": "^C"
+  },
+  "scripts": {
+    "installation": {
+      "script": "#!/bin/bash\r\n# RuneScape: Dragonwilds - Install Script\r\n# Egg created by c4rl0s @ GamzyHost\r\n# SteamCMD AppID: 4019830\r\n\r\n## install steamcmd\r\nif [ ! -d /mnt/server/steamcmd ]; then\r\n    mkdir -p /mnt/server/steamcmd\r\nfi\r\n\r\ncd /mnt/server/steamcmd\r\ncurl -sqL \"https://steamcdn-a.akamaihd.net/client/installer/steamcmd_linux.tar.gz\" | tar zxvf -\r\n\r\n## install/update game\r\n./steamcmd.sh \\\r\n    +force_install_dir /mnt/server \\\r\n    +login anonymous \\\r\n    +app_update 4019830 validate \\\r\n    +quit\r\n\r\n## create config dirs\r\nmkdir -p /mnt/server/RSDragonwilds/Saved/Config/LinuxServer\r\nmkdir -p /mnt/server/RSDragonwilds/Saved/Savegames\r\n\r\n## create default config if not exists\r\nCONFIG_FILE=\"/mnt/server/RSDragonwilds/Saved/Config/LinuxServer/DedicatedServer.ini\"\r\nif [ ! -f \"$CONFIG_FILE\" ]; then\r\n    cat > \"$CONFIG_FILE\" << 'EOF'\r\n[/Script/RSDragonwilds.RSDWGameMode]\r\nOwnerId=CHANGE_ME\r\nServerName=My Dragonwilds Server\r\nDefaultWorldName=My World\r\nAdminPassword=change_me\r\nWorldPassword=\r\nMaxPlayers=6\r\nEOF\r\nfi\r\n\r\necho \"--> Installation complete. Egg created by c4rl0s @ GamzyHost\"\r\necho \"--> Edit RSDragonwilds/Saved/Config/LinuxServer/DedicatedServer.ini before starting.\"",
+      "container": "ghcr.io/parkervcp/installers:debian",
+      "entrypoint": "bash"
+    }
+  },
+  "variables": [
+    {
+      "name": "Owner ID",
+      "description": "Your RuneScape: Dragonwilds Player ID. Find it in-game at the bottom of the Settings menu. The server WILL NOT start without this value.",
+      "env_variable": "OWNER_ID",
+      "default_value": "",
+      "user_viewable": true,
+      "user_editable": true,
+      "rules": "required|string|max:128",
+      "field_type": "text"
+    },
+    {
+      "name": "Server Name",
+      "description": "The name of your server as it appears in the server browser.",
+      "env_variable": "SERVER_NAME",
+      "default_value": "My Dragonwilds Server",
+      "user_viewable": true,
+      "user_editable": true,
+      "rules": "required|string|max:64",
+      "field_type": "text"
+    },
+    {
+      "name": "Default World Name",
+      "description": "Name of the world created automatically on first launch. Cannot be changed after the first start.",
+      "env_variable": "DEFAULT_WORLD_NAME",
+      "default_value": "My World",
+      "user_viewable": true,
+      "user_editable": true,
+      "rules": "required|string|max:64",
+      "field_type": "text"
+    },
+    {
+      "name": "World Password",
+      "description": "Optional. Password required to join the world. Leave empty for a public server.",
+      "env_variable": "WORLD_PASSWORD",
+      "default_value": "",
+      "user_viewable": true,
+      "user_editable": true,
+      "rules": "nullable|string|max:64",
+      "field_type": "text"
+    },
+    {
+      "name": "Admin Password",
+      "description": "Any player who enters this password in Server Management will be granted admin privileges.",
+      "env_variable": "ADMIN_PASSWORD",
+      "default_value": "",
+      "user_viewable": true,
+      "user_editable": true,
+      "rules": "required|string|max:64",
+      "field_type": "text"
+    },
+    {
+      "name": "Max Players",
+      "description": "Maximum number of simultaneous players. Recommended maximum: 6.",
+      "env_variable": "MAX_PLAYERS",
+      "default_value": "6",
+      "user_viewable": true,
+      "user_editable": true,
+      "rules": "required|integer|min:1|max:6",
+      "field_type": "text"
+    },
+    {
+      "name": "Query Port",
+      "description": "UDP port used by Steam for server queries.",
+      "env_variable": "QUERY_PORT",
+      "default_value": "27015",
+      "user_viewable": true,
+      "user_editable": true,
+      "rules": "required|integer|min:1024|max:65535",
+      "field_type": "text"
+    }
+  ]
+}
