@@ -14,14 +14,6 @@
 |---|---|---|---|
 | 4–8 GB | 2–4 cores | 12 GB | 6 |
 
----
-
-## Docker Images
-
-| Purpose | Image |
-|---|---|
-| Installation | `ghcr.io/parkervcp/installers:debian` |
-| Runtime | `ghcr.io/parkervcp/steamcmd:debian` |
 
 ---
 
