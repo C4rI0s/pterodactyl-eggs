@@ -2,7 +2,6 @@
 
 # RuneScape: Dragonwilds — Pterodactyl Egg
 
-![Steam AppID](https://img.shields.io/badge/Steam_AppID-4019830-1b2838?style=for-the-badge&logo=steam)
 ![Made by](https://img.shields.io/badge/Made_by-c4rl0s_@_GamzyHost-22c55e?style=for-the-badge)
 
 </div>
