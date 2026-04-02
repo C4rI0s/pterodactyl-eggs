@@ -15,11 +15,3 @@
 | 4–8 GB | 2–4 cores | 12 GB | 6 |
 
 
----
-
-## How to Install
-
-1. **Admin → Nests → Import Egg** → upload the `.json`
-2. Create a server using the egg
-3. Click **Reinstall** and wait for SteamCMD to download the server files
-4. Set your `OwnerId` in:
